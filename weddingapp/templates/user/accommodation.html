@@ -1,0 +1,45 @@
+{% extends 'user/layout1.html'%}
+{% block title%} {{session['user']}} {% endblock %}
+
+{% block statement %}
+<p class="display-4 color1">Welcome, {{session['user']}} </p>
+<p class="lead color2">
+We would like to hear from you. Please fill the form let us know your thoughts..
+</p>
+{% set msg = get_flashed_messages(with_categories=True)%}
+{% if msg %}
+{% for i in msg %}
+{% if i[0] == 'error'%}
+<p class="alert alert-danger">{{i[1]}}</p>
+{% else %}
+<p class="alert alert-success">{{i[1]}}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+<div class="bg-dark col-7 p-3">
+{% include "user/nav.html" %}
+</div>
+
+{% endblock %}
+
+{% block form %}
+<div class="p-1 mt-5">
+<h2>View Hotel Suggestions</h2>
+{# {{ rsp_json }} #}
+   <div class="row">
+    {% if rsp_json.get('status') == 1 %}
+    {% for m in rsp_json['message'] %}
+        <div class="col-md-6">
+            <img src="{{m['image']}}" class="img-fluid">
+            <h5>{{ m['contact'] }}</h5>
+        </div>
+    {% endfor %}
+    {% endif %}
+   </div>
+ 
+</div>
+{% endblock%}
+
+{% block custom_scripts %}
+ 
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'user/layout1.html'%}
+{% block title%} {{session['user']}} {% endblock %}
+
+{% block statement %}
+<p class="display-4 color1">Welcome, {{session['user']}} </p>
+<p class="lead color2">
+We would like to hear from you. Please fill the form let us know your thoughts..
+</p>
+{% set msg = get_flashed_messages(with_categories=True)%}
+{% if msg %}
+{% for i in msg %}
+{% if i[0] == 'error'%}
+<p class="alert alert-danger">{{i[1]}}</p>
+{% else %}
+<p class="alert alert-success">{{i[1]}}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+<div class="bg-dark col-7 p-3">
+{% include "user/nav.html" %}
+</div>
+
+{% endblock %}
+
+{% block form %}
+<div class="p-3 mt-5">
+<form action="/user/update" method="post">
+<div class="mb-3 row">
+<label class="col-md-3">First Name</label>
+<div class="col-md-9">
+    <input type="text" name="fname" value="{{ guest_deets.guest_fname}}" class="form-control form-control-lg", style="background-color:rgba(0, 0,0, 0.5);border: 1px solid #a8c868; color:#fff;">
+</div>
+</div>
+<div class="mb-3 row">
+<label class="col-md-3">Last Name</label>
+<div class="col-md-9">
+    <input type="text" name="lname"  value="{{ guest_deets.guest_lname}}" class="form-control form-control-lg", style="background-color:rgba(0, 0,0, 0.5);border: 1px solid #a8c868; color:#fff;">
+</div>
+</div>
+<div class="mb-3 row">
+<label class="col-md-3">Address</label>
+<div class="col-md-9">
+    <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}" >
+    <textarea name="address" class="form-control form-control-lg" style="background-color:rgba(0, 0,0, 0.5);border: 1px solid #a8c868; color:#fff;">{{ guest_deets.guest_address}}</textarea>
+</div>
+</div>
+<div class="d-flex btn-group row">
+<button class="btn btn-lg color3 col-md-10 offset-1" style="border:2px solid #BA68C8;">Update Details</button>
+</div>
+</form>
+</div>
+{% endblock%}

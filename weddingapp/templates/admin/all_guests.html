@@ -1,0 +1,26 @@
+{% extends 'admin/admin_panel.html' %}
+{% block contents %}
+<h2>GUESTS</h2>
+ 
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>Guest Name</th>
+        <th>Date Registered</th>
+        <th>Action</th>
+    </tr>
+    {% for x in guests %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ x.guest_fname }} {{ x.guest_lname }}</td>
+<td>
+    {% set formated=x.guest_regdate.strftime('%d %A %b, %Y') %}
+
+{{ formated }}
+</td>
+<td>
+<a href="/admin/delete/{{x.guest_id}}" onclick="return confirm('Do You really want to delete this record?')" class="text-danger">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock contents %}

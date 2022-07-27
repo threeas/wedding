@@ -1,0 +1,28 @@
+{% extends 'admin/admin_panel.html' %}
+{% block contents %}
+<h2>EDIT GIFT DETAILS</h2>
+<div class="my-2 row">
+<p><a href="{{ url_for('admin_dashboard')}}">Home </a> / <a href="/admin/managegifts"> Manage Gifts</a> / Edit Gift</p>
+</div>
+<div class="row">
+<div class="col-10 offset-1">
+<form action="{{ url_for('update_gift')}}" method="post">      
+<div class="my-3 row">
+   
+<label class="col-md-2">Gift Name</label>               
+<div class="col-md-7">
+    <input type="text" name="giftname" value="{{ deets.gift_name}}" class="form-control">
+   
+    <input type="hidden" name="id" value="{{ deets.gift_id}}">
+
+    
+</div>
+<div class="col-md-3">
+    <button class="btn btn-outline-primary">Update Details</button>
+</div>
+    </div>
+</form>
+</div>
+
+</div>
+{% endblock contents %}

@@ -1,0 +1,52 @@
+{% extends 'user/layout1.html'%}
+{% block title%} {{session['user']}} {% endblock %}
+
+{% block statement %}
+<p class="display-4 color1">Welcome, {{session['user']}} </p>
+<p class="lead color2">
+We would like to hear from you. Please fill the form let us know your thoughts..
+</p>
+{% set msg = get_flashed_messages(with_categories=True)%}
+{% if msg %}
+{% for i in msg %}
+{% if i[0] == 'error'%}
+<p class="alert alert-danger">{{i[1]}}</p>
+{% else %}
+<p class="alert alert-success">{{i[1]}}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+<div class="bg-dark col-7 p-3">
+{% include "user/nav.html" %}
+</div>
+
+{% endblock %}
+
+{% block form %}
+<div class="p-3 mt-5">
+    <p> Thank you for visiting our Gioft Registry, below are the items we need for our new Home. Thank you</p>
+<form method="post" action="{{ url_for('submit_registry')}}">
+    <table class="table table-striped">
+        <tr><th>Serial</th><th>Gift</th><th>Gift Name</th></tr>
+       {# {{ gifts }} #} <br>
+       {# {{ promised_gifts }} #}
+        {% for g in gifts %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            {% if g.gift_id in promised_gifts %}
+            <td><input type="checkbox" name="selected_gift" value="{{g.gift_id }}" checked></td>
+            {% else %}
+            <td><input type="checkbox" name="selected_gift" value="{{g.gift_id }}"></td>
+            {% endif %}
+            <td>{{ g.gift_name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="d-flex btn-group">
+        <button class="btn btn-lg color3 d-inline-block" style="border:2px solid #a8c868;">Submit Form</button>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    </div>
+</form>
+ 
+</div>
+{% endblock%}

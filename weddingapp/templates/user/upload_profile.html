@@ -1,0 +1,50 @@
+{% extends 'user/layout1.html'%}
+{% block title%} {{session['user']}} {% endblock %}
+
+{% block statement %}
+<p class="display-4 color1">Welcome, {{session['user']}} </p>
+<p class="lead color2">
+We would like to hear from you. Please fill the form let us know your thoughts..
+</p>
+{% set msg = get_flashed_messages(with_categories=True)%}
+{% if msg %}
+{% for i in msg %}
+{% if i[0] == 'error'%}
+<p class="alert alert-danger">{{i[1]}}</p>
+{% else %}
+<p class="alert alert-success">{{i[1]}}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+<div class="bg-dark col-7 p-3">
+{% include "user/nav.html" %}
+</div>
+
+{% endblock %}
+
+{% block form %}
+<div class="p-3 mt-5">
+<form action="/user/submit_upload" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+<div class="mb-3 row">
+<label class="col-md-2">Picture</label>
+<div class="col-md-6">
+    <input type="file" name="profilepix" class="form-control form-control-lg", style="background-color:rgba(0, 0,0, 0.5);border: 1px solid #a8c868; color:#fff;">
+</div>
+
+
+
+
+
+<div class="col-md-4">
+    <div class="d-flex btn-group row">
+        <button class="btn btn-lg color3 col-md-10 offset-1" style="border:2px solid #BA68C8;">Upload</button>
+        </div>
+</div>
+</div>
+ 
+
+</form>
+</div>
+{% endblock%}
